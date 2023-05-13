@@ -27,4 +27,25 @@ Decorator.prototype.paintTheRoom = function(){
     }
 };
 
+Decorator.prototype.reduceThePaint = function(){
+    let neededPaint = 0.5 *this.room.area;
+    if (this.room.painted){
+        this.stock.forEach((paint) => {
+            if(paint.liters <= neededPaint){
+                neededPaint -= paint.liters;
+                paint.liters = 0
+                paint.empty = true
+            }else{
+                paint.liters -= neededPaint;
+                neededPaint = 0
+            };
+        });
+    };
+
+    Decorator.prototype.removeEmptyCansOfPaint = function(){
+        const newStock = this.stock.filter((paint) => !(paint.empty))
+        this.stock = newStock
+    }
+}
+
 module.exports = Decorator
